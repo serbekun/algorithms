@@ -1,4 +1,4 @@
-Algorithms Collection
+# Algorithms Collection
 
 This repository contains a collection of algorithm implementations in C, Fortran, Python, and Gnuplot. Each file demonstrates a specific algorithm or computational method, useful for educational purposes and practical applications.
 Table of Contents
@@ -7,7 +7,19 @@ Table of Contents
 
     File Descriptions
 
+        C Programs
+
+        Fortran Program
+
+        Python Script
+
+        Gnuplot Scripts
+
     Getting Started
+
+        Prerequisites
+
+        Compilation and Execution
 
     Usage Examples
 
@@ -49,7 +61,6 @@ Python Script
 
     SimultaneousEquationCalculator.py
     Solves systems of simultaneous linear equations using numerical methods.
-    GitHub+1Medium+1
 
 Gnuplot Scripts
 
@@ -66,13 +77,12 @@ Prerequisites
     Python 3.x
 
     Gnuplot
-    dbader.org+7GitHub+7YouTube+7
 
 Compilation and Execution
 C Programs
 
 To compile and run a C program:
-dbader.org+1Bulldogjob+1
+Medium+7Medium+7GeeksforGeeks+7
 
 gcc -o program_name source_file.c
 ./program_name
