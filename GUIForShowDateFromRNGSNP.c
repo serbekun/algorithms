@@ -1,31 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define COLS 5
+
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        printf("use file %s\n", argv[0]);
+        printf("use: %s <file>\n", argv[0]);
         return 1;
     }
 
     FILE *file = fopen(argv[1], "r");
     if (!file) {
-        perror("erro open file");
+        perror("error open file from argv[1]");
         return 1;
     }
 
-    int table, student;
+    int row, col, student;
+    char gender;
     int count = 0;
 
-    while (fscanf(file, "table - %d, student - %d\n", &table, &student) == 2) {
-        printf("[%d] ", student);
+    while (fscanf(file, "Row %d, Col %d: Student %d (%c)\n", &row, &col, &student, &gender) == 4) {
+        printf("[%d (%c)] ", student, gender);
         count++;
 
-        if (count % 6 == 0) {
+        if (count % COLS == 0) {
             printf("\n");
         }
     }
 
-    if (count % 6 != 0) {
+    if (count % COLS != 0) {
         printf("\n");
     }
 
