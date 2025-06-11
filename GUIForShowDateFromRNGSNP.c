@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define COLS 5
+#define COLS 6
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {

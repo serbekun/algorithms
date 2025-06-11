@@ -4,12 +4,49 @@
 
 #define COLS 6
 #define PLACES_SIZE 25
+#define FILENAME "new_sit_place.txt"
 
+/* funk for show result */
+int ShowResult() {
+
+    // open file
+    FILE *file = fopen(FILENAME, "r");
+    if (!file) { // if error open file return
+        perror("error open file from argv[1]");
+        return 1;
+    }
+
+    // init value
+    int row, col, student;
+    char gender;
+    int count = 0;
+
+    // read file and print
+    while (fscanf(file, "Row %d, Col %d: Student %d (%c)\n", &row, &col, &student, &gender) == 4) {
+        printf("[%d (%c)] ", student, gender);
+        count++;
+
+        if (count % COLS == 0) {
+            printf("\n");
+        }
+    }
+
+    if (count % COLS != 0) {
+        printf("\n");
+    }
+
+    // clease file return 0
+    fclose(file);
+    return 0;
+}
+
+/* student struct */
 struct student {
-    int id;
+    int id; // num in class
     int sex; // 0 - boy, 1 - girl
 };
 
+/* funk for shuffle and get more random */
 void shuffle(int *array, int size) {
     for (int i = size - 1; i > 0; i--) {
         int j = rand() % (i + 1);
@@ -19,6 +56,7 @@ void shuffle(int *array, int size) {
     }
 }
 
+/* funk for get what place for what sex */
 int get_required_sex(int row, int col) {
     if (row % 2 == 0) {
         return (col % 2 == 0) ? 0 : 1;
@@ -27,7 +65,7 @@ int get_required_sex(int row, int col) {
     }
 }
 
-
+/* funk for set new sit place */
 void SetPlaces(struct student **students, int *places, int size, int cols) {
     int rows = (size + cols - 1) / cols;
     int total_pairs = 0;
@@ -135,11 +173,8 @@ void SetPlaces(struct student **students, int *places, int size, int cols) {
     free(girls);
 }
 
+/* main */
 int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        printf("Usage: %s <output_file>\n", argv[0]);
-        return 1;
-    }
 
     srand(time(NULL));
 
@@ -150,31 +185,31 @@ int main(int argc, char *argv[]) {
     }
 
     // init student
-    struct student s1 = {1, 0};
+    struct student s1 = {1, 1};
     struct student s2 = {2, 1};
     struct student s3 = {3, 1};
     struct student s4 = {4, 1};
-    struct student s5 = {5, 1};
-    struct student s6 = {6, 1};
+    struct student s5 = {5, 0};
+    struct student s6 = {6, 0};
     struct student s7 = {7, 1};
-    struct student s8 = {8, 1};
-    struct student s9 = {9, 1};
-    struct student s10 = {10, 1};
-    struct student s11 = {11, 1};
-    struct student s12 = {12, 1};
-    struct student s13 = {13, 0};
-    struct student s14 = {14, 0};
-    struct student s15 = {15, 0};
+    struct student s8 = {8, 0};
+    struct student s9 = {9, 0};
+    struct student s10 = {10, 0};
+    struct student s11 = {11, 0};
+    struct student s12 = {12, 0};
+    struct student s13 = {13, 1};
+    struct student s14 = {14, 1};
+    struct student s15 = {15, 1};
     struct student s16 = {16, 0};
     struct student s17 = {17, 0};
     struct student s18 = {18, 0};
     struct student s19 = {19, 0};
     struct student s20 = {20, 0};
-    struct student s21 = {21, 0};
+    struct student s21 = {21, 1};
     struct student s22 = {22, 1};
     struct student s23 = {23, 0};
-    struct student s24 = {24, 0};
-    struct student s25 = {25, 0};
+    struct student s24 = {24, 1};
+    struct student s25 = {25, 1};
 
     struct student *persons_array[PLACES_SIZE] = {
         &s1, &s2, &s3, &s4, &s5, &s6, &s7, &s8, &s9, &s10,
@@ -184,7 +219,7 @@ int main(int argc, char *argv[]) {
 
     SetPlaces(persons_array, places, PLACES_SIZE, COLS);
 
-    FILE *file = fopen(argv[1], "w");
+    FILE *file = fopen(FILENAME, "w");
     if (!file) {
         perror("Error opening file");
         printf("Outputting to terminal:\n");
@@ -207,8 +242,9 @@ int main(int argc, char *argv[]) {
                 (persons_array[places[i]-1]->sex == 0) ? "M" : "F");
     }
 
-    printf("Successfully wrote data to file '%s'\n", argv[1]);
     fclose(file);
+    printf("Successfully wrote data to file '%s'\n", FILENAME);
+    ShowResult();
     free(places);
     return 0;
 }

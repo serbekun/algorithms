@@ -1,26 +1,6 @@
-Row 1, Col 1: Student 9 (F)
-Row 1, Col 2: Student 21 (M)
-Row 1, Col 3: Student 4 (F)
-Row 1, Col 4: Student 16 (M)
-Row 1, Col 5: Student 6 (F)
-Row 2, Col 1: Student 17 (M)
-Row 2, Col 2: Student 11 (F)
-Row 2, Col 3: Student 15 (M)
-Row 2, Col 4: Student 10 (F)
-Row 2, Col 5: Student 1 (M)
-Row 3, Col 1: Student 8 (F)
-Row 3, Col 2: Student 25 (M)
-Row 3, Col 3: Student 2 (F)
-Row 3, Col 4: Student 24 (M)
-Row 3, Col 5: Student 3 (F)
-Row 4, Col 1: Student 26 (M)
-Row 4, Col 2: Student 5 (F)
-Row 4, Col 3: Student 13 (M)
-Row 4, Col 4: Student 7 (F)
-Row 4, Col 5: Student 14 (M)
-Row 5, Col 1: Student 22 (F)
-Row 5, Col 2: Student 18 (M)
-Row 5, Col 3: Student 12 (F)
-Row 5, Col 4: Student 20 (M)
-Row 5, Col 5: Student 19 (M)
-Row 6, Col 1: Student 23 (M)
+Successfully wrote data to file 'new_sit_place.txt'
+[1 (M)] [11 (F)] [14 (M)] [9 (F)] [21 (M)] [10 (F)] 
+[4 (F)] [13 (M)] [2 (F)] [18 (M)] [5 (F)] [17 (M)] 
+[20 (M)] [7 (F)] [23 (M)] [8 (F)] [15 (M)] [6 (F)] 
+[12 (F)] [25 (M)] [22 (F)] [24 (M)] [3 (F)] [19 (M)] 
+[16 (M)] 
