@@ -44,6 +44,7 @@ int ShowResult() {
 struct student {
     int id; // num in class
     int sex; // 0 - boy, 1 - girl
+    int eyes; // 0 - good, 1 - bad; 
 };
 
 /* funk for shuffle and get more random */
@@ -67,6 +68,8 @@ int get_required_sex(int row, int col) {
 
 /* funk for set new sit place */
 void SetPlaces(struct student **students, int *places, int size, int cols) {
+    
+    // inti values
     int rows = (size + cols - 1) / cols;
     int total_pairs = 0;
     int max_pairs = 100;
@@ -94,16 +97,21 @@ void SetPlaces(struct student **students, int *places, int size, int cols) {
         }
     }
 
+    // inti values
     struct student *special_boy = NULL;
     struct student *special_girl = NULL;
     int *boys = malloc(size * sizeof(int));
     int *girls = malloc(size * sizeof(int));
     int boy_count = 0, girl_count = 0;
 
+    // init special id
+    int special_id1 = 23;
+    int special_id2 = 22;
+
     for (int i = 0; i < size; i++) {
-        if (students[i]->id == 22) {
+        if (students[i]->id == special_id2) {
             special_girl = students[i];
-        } else if (students[i]->id == 23) {
+        } else if (students[i]->id == special_id1) {
             special_boy = students[i];
         } else {
             if (students[i]->sex == 0) {

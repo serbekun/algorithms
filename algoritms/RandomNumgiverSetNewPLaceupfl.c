@@ -63,7 +63,7 @@ void SetPlaces(struct student **students, int *places, int size, int cols) {
     int boy_count = 0, girl_count = 0;
 
     for (int i = 0; i < size; i++) {
-        if (students[i]->id == 22) {
+        if (students[i]->id == 9) {
             special_girl = students[i];
         } else if (students[i]->id == 23) {
             special_boy = students[i];
