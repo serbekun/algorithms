@@ -42,7 +42,9 @@ int main() {
     double *array_1 = new double[array_size];
     double *array_2 = new double[array_size];
 
+    // set random in array
     SetRandomNum(random_giver, array_1, array_size, min, max);
+    SetRandomNUm(radnom_giv, array_2, array_size, min, max);
 
     // delete dinamicks array
     delete[] array_1;

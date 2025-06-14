@@ -8,20 +8,16 @@
 
 /* funk for show result */
 int ShowResult() {
-
-    // open file
     FILE *file = fopen(FILENAME, "r");
-    if (!file) { // if error open file return
+    if (!file) {
         perror("error open file from argv[1]");
         return 1;
     }
 
-    // init value
     int row, col, student;
     char gender;
     int count = 0;
 
-    // read file and print
     while (fscanf(file, "Row %d, Col %d: Student %d (%c)\n", &row, &col, &student, &gender) == 4) {
         printf("[%d (%c)] ", student, gender);
         count++;
@@ -35,16 +31,21 @@ int ShowResult() {
         printf("\n");
     }
 
-    // clease file return 0
     fclose(file);
     return 0;
 }
 
 /* student struct */
 struct student {
+<<<<<<< HEAD:algoritms/seki.c
     int id; // num in class
     int sex; // 0 - boy, 1 - girl
     int eyes; // 0 - good, 1 - bad; 
+=======
+    int id;
+    int sex;
+    int eyes;
+>>>>>>> a7cc658bfce745b2b024321ffc70d6769ecf07b7:seki.c
 };
 
 /* funk for shuffle and get more random */
@@ -100,9 +101,14 @@ void SetPlaces(struct student **students, int *places, int size, int cols) {
     // inti values
     struct student *special_boy = NULL;
     struct student *special_girl = NULL;
-    int *boys = malloc(size * sizeof(int));
-    int *girls = malloc(size * sizeof(int));
-    int boy_count = 0, girl_count = 0;
+
+    // Arrays for non-special students categorized by eyes and sex
+    int *bad_boys = malloc(size * sizeof(int));
+    int *bad_girls = malloc(size * sizeof(int));
+    int *good_boys = malloc(size * sizeof(int));
+    int *good_girls = malloc(size * sizeof(int));
+    int bad_boys_count = 0, bad_girls_count = 0;
+    int good_boys_count = 0, good_girls_count = 0;
 
     // init special id
     int special_id1 = 23;
@@ -114,23 +120,40 @@ void SetPlaces(struct student **students, int *places, int size, int cols) {
         } else if (students[i]->id == special_id1) {
             special_boy = students[i];
         } else {
-            if (students[i]->sex == 0) {
-                boys[boy_count++] = students[i]->id;
-            } else {
-                girls[girl_count++] = students[i]->id;
+            if (students[i]->eyes == 1) { // Bad eyes
+                if (students[i]->sex == 0) {
+                    bad_boys[bad_boys_count++] = students[i]->id;
+                } else {
+                    bad_girls[bad_girls_count++] = students[i]->id;
+                }
+            } else { // Good eyes
+                if (students[i]->sex == 0) {
+                    good_boys[good_boys_count++] = students[i]->id;
+                } else {
+                    good_girls[good_girls_count++] = students[i]->id;
+                }
             }
         }
     }
 
-    shuffle(boys, boy_count);
-    shuffle(girls, girl_count);
+    // Shuffle each category
+    shuffle(bad_boys, bad_boys_count);
+    shuffle(bad_girls, bad_girls_count);
+    shuffle(good_boys, good_boys_count);
+    shuffle(good_girls, good_girls_count);
 
     for (int i = 0; i < size; i++) {
         places[i] = 0;
     }
 
     if (total_pairs > 0) {
-        int pair_index = rand() % total_pairs;
+        int pair_index;
+        if (special_boy->eyes == 1 || special_girl->eyes == 1) {
+            pair_index = 0; // Frontmost pair for bad-eyed special students
+        } else {
+            pair_index = rand() % total_pairs;
+        }
+
         int pos1 = pairs[pair_index][0];
         int pos2 = pairs[pair_index][1];
         int row1 = pos1 / cols;
@@ -152,38 +175,48 @@ void SetPlaces(struct student **students, int *places, int size, int cols) {
         }
     }
 
-    int boy_idx = 0, girl_idx = 0;
+    int bad_boys_idx = 0, bad_girls_idx = 0;
+    int good_boys_idx = 0, good_girls_idx = 0;
     for (int row = 0; row < rows; row++) {
         int row_cols = (row < rows - 1) ? cols : size - (rows - 1) * cols;
         for (int col = 0; col < row_cols; col++) {
             int idx = row * cols + col;
-            if (places[idx] != 0) continue;
+            if (places[idx] != 0) continue; // Skip occupied by special pair
             
             int required_sex = get_required_sex(row, col);
-            if (required_sex == 0) {
-                if (boy_idx < boy_count) {
-                    places[idx] = boys[boy_idx++];
-                } else if (girl_idx < girl_count) {
-                    places[idx] = girls[girl_idx++];
+            if (required_sex == 0) { // Boy required
+                if (bad_boys_idx < bad_boys_count) {
+                    places[idx] = bad_boys[bad_boys_idx++];
+                } else if (good_boys_idx < good_boys_count) {
+                    places[idx] = good_boys[good_boys_idx++];
+                } else if (bad_girls_idx < bad_girls_count) {
+                    places[idx] = bad_girls[bad_girls_idx++];
+                } else {
+                    places[idx] = good_girls[good_girls_idx++];
                 }
-            } else {
-                if (girl_idx < girl_count) {
-                    places[idx] = girls[girl_idx++];
-                } else if (boy_idx < boy_count) {
-                    places[idx] = boys[boy_idx++];
+            } else { // Girl required
+                if (bad_girls_idx < bad_girls_count) {
+                    places[idx] = bad_girls[bad_girls_idx++];
+                } else if (good_girls_idx < good_girls_count) {
+                    places[idx] = good_girls[good_girls_idx++];
+                } else if (bad_boys_idx < bad_boys_count) {
+                    places[idx] = bad_boys[bad_boys_idx++];
+                } else {
+                    places[idx] = good_boys[good_boys_idx++];
                 }
             }
         }
     }
 
     free(pairs);
-    free(boys);
-    free(girls);
+    free(bad_boys);
+    free(bad_girls);
+    free(good_boys);
+    free(good_girls);
 }
 
 /* main */
 int main(int argc, char *argv[]) {
-
     srand(time(NULL));
 
     int *places = malloc(PLACES_SIZE * sizeof(int));
@@ -192,32 +225,31 @@ int main(int argc, char *argv[]) {
         return 2;
     }
 
-    // init student
-    struct student s1 = {1, 1};
-    struct student s2 = {2, 1};
-    struct student s3 = {3, 1};
-    struct student s4 = {4, 1};
-    struct student s5 = {5, 0};
-    struct student s6 = {6, 0};
-    struct student s7 = {7, 1};
-    struct student s8 = {8, 0};
-    struct student s9 = {9, 0};
-    struct student s10 = {10, 0};
-    struct student s11 = {11, 0};
-    struct student s12 = {12, 0};
-    struct student s13 = {13, 1};
-    struct student s14 = {14, 1};
-    struct student s15 = {15, 1};
-    struct student s16 = {16, 0};
-    struct student s17 = {17, 0};
-    struct student s18 = {18, 0};
-    struct student s19 = {19, 0};
-    struct student s20 = {20, 0};
-    struct student s21 = {21, 1};
-    struct student s22 = {22, 1};
-    struct student s23 = {23, 0};
-    struct student s24 = {24, 1};
-    struct student s25 = {25, 1};
+    struct student s1 = {1, 1, 1};
+    struct student s2 = {2, 1, 1};
+    struct student s3 = {3, 1, 1};
+    struct student s4 = {4, 1, 1};
+    struct student s5 = {5, 0, 1};
+    struct student s6 = {6, 0, 0};
+    struct student s7 = {7, 1, 0};
+    struct student s8 = {8, 0, 0};
+    struct student s9 = {9, 0, 0};
+    struct student s10 = {10, 0, 0};
+    struct student s11 = {11, 0, 0};
+    struct student s12 = {12, 0, 0};
+    struct student s13 = {13, 1, 0};
+    struct student s14 = {14, 1, 0};
+    struct student s15 = {15, 1, 0};
+    struct student s16 = {16, 0, 0};
+    struct student s17 = {17, 0, 0};
+    struct student s18 = {18, 0, 0};
+    struct student s19 = {19, 0, 0};
+    struct student s20 = {20, 0, 0};
+    struct student s21 = {21, 1, 0};
+    struct student s22 = {22, 1, 0};
+    struct student s23 = {23, 0, 0};
+    struct student s24 = {24, 1, 0};
+    struct student s25 = {25, 1, 0};
 
     struct student *persons_array[PLACES_SIZE] = {
         &s1, &s2, &s3, &s4, &s5, &s6, &s7, &s8, &s9, &s10,
@@ -229,6 +261,7 @@ int main(int argc, char *argv[]) {
 
     FILE *file = fopen(FILENAME, "w");
     if (!file) {
+        
         perror("Error opening file");
         printf("Outputting to terminal:\n");
         for (int i = 0; i < PLACES_SIZE; i++) {
