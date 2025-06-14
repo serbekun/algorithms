@@ -2,13 +2,19 @@ import re
 from fractions import Fraction
 
 def parse_number(s):
+    if not s:
+        return Fraction(0)
+    if s.startswith('/'):
+        return Fraction(1, int(s[1:]))
     try:
+        if '/' in s:
+            numerator, denominator = s.split('/')
+            return Fraction(int(numerator), int(denominator))
         return Fraction(s)
     except:
         return Fraction(float(s))
 
 def expand(expr):
-    
     def replace(m):
         multiplier = m.group(1)
         inner = m.group(2)
@@ -20,7 +26,6 @@ def expand(expr):
             multiplier = parse_number(multiplier)
 
         expanded = ""
-
         inner = re.sub(r'(?<=.)(-)', r'+-', inner)
         terms = inner.split("+")
         for term in terms:
@@ -49,24 +54,50 @@ def expand(expr):
 def parse_expression(expr):
     expr = expand(expr.replace(" ", ""))
     a = b = c = Fraction(0)
-
-    for match in re.finditer(r'([+-]?[\d./]*)([xy]?)', expr):
-        num, var = match.groups()
-        if num == "" and var != "":
-            num = "1"
-        elif num == "+":
-            num = "1"
-        elif num == "-":
-            num = "-1"
-        if num == "" and var == "":
+    tokens = re.findall(r'([+-]?[\d./]*[xy]?)', expr)
+    sign = 1  # текущий знак
+    
+    for token in tokens:
+        if not token:
             continue
-        value = parse_number(num)
-        if var == "x":
-            a += value
-        elif var == "y":
-            b += value
+
+        if token.startswith('+'):
+            sign = 1
+            token = token[1:]
+        elif token.startswith('-'):
+            sign = -1
+            token = token[1:]
+        
+        if '/' in token and ('x' in token or 'y' in token):
+            parts = token.split('/')
+            numerator = parts[0] or '1'
+            denominator_part = parts[1]
+            
+            # Отделяем знаменатель от переменной
+            var_match = re.search(r'([xy])', denominator_part)
+            if var_match:
+                var = var_match.group(1)
+                denominator = denominator_part.replace(var, '') or '1'
+                coef = sign * Fraction(int(numerator), int(denominator))
+                if var == 'x':
+                    a += coef
+                else:
+                    b += coef
+            else:
+                c += sign * Fraction(int(numerator), int(denominator_part))
+
+        elif 'x' in token or 'y' in token:
+            var_match = re.search(r'([xy])', token)
+            var = var_match.group(1)
+            coef_str = token.replace(var, '') or '1'
+            coef = sign * parse_number(coef_str)
+            if var == 'x':
+                a += coef
+            else:
+                b += coef
         else:
-            c += value
+            c += sign * parse_number(token or '0')
+
     return a, b, c
 
 def parse_equation(eq):
