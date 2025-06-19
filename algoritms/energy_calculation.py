@@ -2,33 +2,45 @@ def divide(x, y):
     """Division of two numbers"""
     return x / y
 
+
 def multiply(x, y):
     """Multiplication of two numbers"""
     return x * y
+
 
 def calculate_power(voltage, current):
     """Power calculation (P = U*I)"""
     return multiply(voltage, current)
 
+
 def calculate_energy(power, time):
     """Energy calculation (E = P*t)"""
     return multiply(power, time)
+
 
 def calculate_current(power, voltage):
     """Current calculation (I = P/U)"""
     return divide(power, voltage)
 
+
 def calculate_voltage(power, current):
     """Voltage calculation (U = P/I)"""
     return divide(power, current)
 
-def main():
+
+def print_menu():
+    """ menu gui """
     print("Electricity Calculator")
     print("1. Power calculation (P = U*I)")
     print("2. Energy calculation (E = P*t)")
     print("3. Current calculation (I = P/U)")
     print("4. Voltage calculation (U = P/I)")
+    print("5. Show menu")
     print("0. Exit")
+
+
+def main():
+    print_menu()
     
     while True:
         choice = input("\nSelect operation (0-4): ")
@@ -73,8 +85,14 @@ def main():
             except ValueError:
                 print("Error: enter numeric values")
                 
+        
+        elif choice == "5":
+            print_menu()
+
+
         else:
             print("Invalid choice. Please try again.")
 
+            
 if __name__ == "__main__":
     main()
