@@ -35,7 +35,29 @@ int calculator_main() {
 
 void plus_oper()
 {
-    printf("")
 
+    // inti values
+    int num1;
+    int num2;
+    int res;
+    
+    // get input
+    printf("type first number for plus : ");
+    scanf(%d, &num1);
+    while (getchar() != '\n') // clear buffer
+    printf("type second number for plus : ");
+    scanf(%d, &num2);
+    while (getchar() != '\n') // clear buffer
 
+    // calculate res
+    res = num1 + num2;
+    
+    // print res
+    printf("result = %d", res);
+
+    // TODO 
+    /*
+    create here code fro save result in array_with_result      
+    */
+    
 }
