@@ -1,123 +1,115 @@
 # Algorithms Collection
 
 This repository contains a collection of algorithm implementations in C, Fortran, Python, and Gnuplot. Each file demonstrates a specific algorithm or computational method, useful for educational purposes and practical applications.
-Table of Contents
 
-    Overview
+## Table of Contents
 
-    File Descriptions
+* Overview
+* File Descriptions
 
-        C Programs
+  * C Programs
+  * Gnuplot Scripts
+* Getting Started
 
-        Fortran Program
+  * Prerequisites
+  * Compilation and Execution
+* Usage Examples
+* License
 
-        Python Script
-
-        Gnuplot Scripts
-
-    Getting Started
-
-        Prerequisites
-
-        Compilation and Execution
-
-    Usage Examples
-
-    License
-
-Overview
+## Overview
 
 The repository includes implementations of various algorithms, such as statistical computations, numerical methods, and data visualization scripts. The code is written in multiple programming languages to showcase different approaches and techniques.
-File Descriptions
-C Programs
 
-    AverageOfAverages.c
-    Calculates the average of multiple average values, useful for statistical analysis.
+## File Descriptions
 
-    BisectionMethod.c
-    Implements the bisection method to find roots of a continuous function.
+### C Programs
 
-    ElemenT-WiseSummationWithStatisticalSummary.c
-    Performs element-wise summation of arrays and provides statistical summaries such as mean and standard deviation.
+* **AverageOfAverages.c**
+  Calculates the average of multiple average values, useful for statistical analysis.
 
-    ElementwiseAbsDifference.c
-    Computes the absolute difference between corresponding elements of two arrays.
+* **BisectionMethod.c**
+  Implements the bisection method to find roots of a continuous function.
 
-    FindExtrema.c
-    Identifies the minimum and maximum values in a dataset.
+* **ComplexPeriodicSignalGenerator.c**
+  Generates a complex periodic signal for analysis or simulation purposes.
 
-    HistogramConstructionAlgorithm.c
-    Constructs a histogram from a dataset, useful for visualizing data distributions.
+* **ElemenT-WiseSummationWithStatisticalSummary.c**
+  Performs element-wise summation of arrays and provides statistical summaries such as mean and standard deviation.
 
-    MonteCarloSimulation.c
-    Performs a Monte Carlo simulation to estimate the value of π using random sampling.
+* **ElementwiseAbsDifference.c**
+  Computes the absolute difference between corresponding elements of two arrays.
 
-Fortran Program
+* **EnergyalCulation.c**
+  Calculates energy-related quantities, potentially for physics or engineering simulations.
 
-    fx.f90
-    A Fortran 90 file defining a mathematical function, potentially used in conjunction with other programs for evaluations.
+* **FindExtrema.c**
+  Identifies the minimum and maximum values in a dataset.
 
-Python Script
+* **HistogramConstructionAlgorithm.c**
+  Constructs a histogram from a dataset, useful for visualizing data distributions.
 
-    SimultaneousEquationCalculator.py
-    Solves systems of simultaneous linear equations using numerical methods.
+* **LagrangeOrNewtonInterpolation.c**
+  Performs polynomial interpolation using Lagrange or Newton methods.
 
-Gnuplot Scripts
+* **MonteCarloSimulation.c**
+  Performs a Monte Carlo simulation to estimate values such as π using random sampling.
 
-    look.gp and plot.gnuplot
-    Gnuplot scripts for visualizing data, possibly related to the outputs of the above algorithms.
+* **RandomNumgiverSetNewPLace.c**
+  Generates and sets new random number placements.
 
-Getting Started
-Prerequisites
+* **RandomNumgiverSetNewPLaceupfl.c**
+  Generates and updates random number placements with additional features.
 
-    C compiler (e.g., gcc)
+### Gnuplot Scripts
 
-    Fortran compiler (e.g., gfortran)
+* **look.gp**
+  Gnuplot script for visualizing data, possibly related to outputs of the above algorithms.
 
-    Python 3.x
+## Getting Started
 
-    Gnuplot
+### Prerequisites
 
-Compilation and Execution
-C Programs
+* C compiler (e.g., gcc)
+* Python 3.x
+* Gnuplot
+
+### Compilation and Execution
+
+#### C Programs
 
 To compile and run a C program:
-Medium+7Medium+7GeeksforGeeks+7
 
+```bash
 gcc -o program_name source_file.c
 ./program_name
+```
 
-Fortran Program
+but to compile ComplexPeriodicSignalGenerator.c
+add -lm
 
-To compile and run the Fortran program:
-
-gfortran -o fx fx.f90
-./fx
-
-Python Script
-
-To run the Python script:
-
-python3 SimultaneousEquationCalculator.py
-
-Gnuplot Scripts
+-example
+```bash
+gcc -o program_name ComplexPeriodicSignalGenerator.c -lm
+```
+#### Gnuplot Scripts
 
 To generate plots using Gnuplot:
 
-gnuplot plot.gnuplot
+```bash
+gnuplot look.gp
+```
 
-Usage Examples
+## Usage Examples
 
 Here are some examples of how to use the programs:
 
-    AverageOfAverages.c: Input multiple sets of numbers to calculate their individual averages and then compute the average of these averages.
+* **AverageOfAverages.c**: Input multiple sets of numbers to calculate their individual averages and then compute the average of these averages.
 
-    BisectionMethod.c: Define a continuous function and specify an interval to find its root using the bisection method.
-
-    SimultaneousEquationCalculator.py: Input coefficients of a system of linear equations to find the solution vector.
+* **BisectionMethod.c**: Define a continuous function and specify an interval to find its root using the bisection method.
 
 Please refer to the comments within each source file for detailed instructions and explanations.
-License
+
+## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 

@@ -4,6 +4,13 @@
         "stdio.h": "c",
         "math.h": "c",
         "stdlib.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "string.h": "c",
+        "initializer_list": "c",
+        "random": "c",
+        "type_traits": "c",
+        "vector": "c",
+        "xstring": "c",
+        "xutility": "c"
     }
 }
