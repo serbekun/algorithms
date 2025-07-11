@@ -70,7 +70,6 @@ The repository includes implementations of various algorithms, such as statistic
 ### Prerequisites
 
 * C compiler (e.g., gcc)
-* Python 3.x
 * Gnuplot
 
 ### Compilation and Execution
