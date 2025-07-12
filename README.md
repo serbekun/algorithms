@@ -30,7 +30,6 @@ The repository includes implementations of various algorithms, such as statistic
 
   have all algorithms funk in file in down
 
-
 * **AverageOfAverages.c**
   Calculates the average of multiple average values, useful for statistical analysis.
 
@@ -74,8 +73,6 @@ The repository includes implementations of various algorithms, such as statistic
 
 * **look.gp**
   Gnuplot script for visualizing data, possibly related to outputs of the above algorithms.
-
-## Getting Started
 
 ### Prerequisites
 
