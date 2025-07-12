@@ -11,10 +11,10 @@ typedef struct {
 } Point;
 
 typedef struct {
-    Point *mins;      
-    Point *maxs;      
-    size_t min_count; 
-    size_t max_count; 
+    Point *mins;
+    Point *maxs;
+    size_t min_count;
+    size_t max_count;
 } ExtremaResult;
 
 typedef struct {
@@ -181,15 +181,21 @@ ExtremaResult FindExtrema(Point *points, size_t size) {
     result.min_count = 0;
     result.max_count = 0;
 
+    if (size < 3) return result;
+
     for (size_t i = 1; i < size - 1; i++) {
-        if (points[i - 1].y > points[i].y && points[i + 1].y > points[i].y) {
+        if (points[i-1].y > points[i].y && points[i+1].y > points[i].y) {
             result.mins[result.min_count++] = points[i];
-        } else if (points[i - 1].y < points[i].y && points[i + 1].y < points[i].y) {
+        } 
+        else if (points[i-1].y < points[i].y && points[i+1].y < points[i].y) {
             result.maxs[result.max_count++] = points[i];
         }
     }
 
-    return result;  // Removed premature free() calls
+    free(result.mins);
+    free(result.maxs);
+
+    return result;
 }
 
 void DecomposerValue(float *array, int *table 
