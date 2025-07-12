@@ -24,6 +24,13 @@ The repository includes implementations of various algorithms, such as statistic
 
 ### C Programs
 
+#### library with all algorithms collection
+
+* **AlgCol.h**
+
+  have all algorithms funk in file in down
+
+
 * **AverageOfAverages.c**
   Calculates the average of multiple average values, useful for statistical analysis.
 
@@ -59,6 +66,9 @@ The repository includes implementations of various algorithms, such as statistic
 
 * **RandomNumgiverSetNewPLaceupfl.c**
   Generates and updates random number placements with additional features.
+
+* **CalculatingTheCross-correlationBetweenTwoSignals.c**
+  calculate the cross correlation between two signals.
 
 ### Gnuplot Scripts
 

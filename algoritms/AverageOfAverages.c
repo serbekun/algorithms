@@ -21,7 +21,6 @@ int GetArrayAvarage(int *array_collect_array_avarage,
     size_t size_array_collect_array_avarage) 
 {
 
-    // init value
     int sum_array_collect_array_avarage = 0;
     int avarage_array_collect_array_avarage;
 
