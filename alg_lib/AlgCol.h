@@ -1,13 +1,16 @@
 #pragma once 
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <stdio.h>
+#include <complex.h>
+
+#define M_PI 3.14159265358979323846
 
 typedef struct {
-    double x;
     double y;
+    double x;
 } Point;
 
 typedef struct {
@@ -32,15 +35,15 @@ void SetArrayRandomValue(int *array, size_t array_size)
 
 int GetArrayAvarage(int *array_collect_array_avarage,
     size_t size_array_collect_array_avarage) 
-{
-    int sum_array_collect_array_avarage = 0;
-    int avarage_array_collect_array_avarage;
-
-    for (int i = 0;i < size_array_collect_array_avarage;i++) 
     {
-        sum_array_collect_array_avarage += *(array_collect_array_avarage + i);
-    }
-
+        int sum_array_collect_array_avarage = 0;
+        int avarage_array_collect_array_avarage;
+        
+        for (size_t i = 0; i < size_array_collect_array_avarage;i++) 
+        {
+            sum_array_collect_array_avarage += *(array_collect_array_avarage + i);
+        }
+        
     avarage_array_collect_array_avarage = sum_array_collect_array_avarage / size_array_collect_array_avarage;
 
     return avarage_array_collect_array_avarage;
@@ -52,7 +55,7 @@ double BisectionMethod(double (*f)(double))
     double right = 10.0;
     double mid = 0.0;
     double eps = 0.000001;
-
+    
     if (fabs(f(left)) < eps) {
         return left;
     }
@@ -60,9 +63,9 @@ double BisectionMethod(double (*f)(double))
         return right;
     }
 
-    while ((right - left) > eps) {
         mid = (left + right) / 2.0;
 
+        while ((right - left) > eps) {
         if (fabs(f(mid)) < eps) {
             break;
         } else if (f(mid) * f(left) < 0) {
@@ -71,15 +74,15 @@ double BisectionMethod(double (*f)(double))
             left = mid;
         }
     }
-    return mid;  // Added return statement
-}  // Added closing brace
+    return mid; 
+}
 
 void cross_correlation(const double *x, int len_x, 
-                      const double *y, int len_y, 
-                      double *result) {
-    int n = len_x + len_y - 1;
-    
-    for (int k = 0; k < n; k++) {
+    const double *y, int len_y, 
+    double *result) {
+        int n = len_x + len_y - 1;
+        
+        for (int k = 0; k < n; k++) {
         double sum = 0.0;
         int shift = k - (len_y - 1); 
         
@@ -95,54 +98,48 @@ void cross_correlation(const double *x, int len_x,
 }  // Function properly closed
 
 /**
+ * @param st Sampling step.
 * Generates a periodic signal from the sum of sines.
 *
 * @param xx Array for storing x values (time or argument).
 * @param fu Array for storing function (signal) values.
 * @param size Size of xx and fu arrays.
-* @param st Sampling step.
 * @param per1 Period of the first sinusoid.
+* @param per4 Period of the fourth sinusoid.
 * @param per2 Period of the second sinusoid.
 * @param per3 Period of the third sinusoid.
-* @param per4 Period of the fourth sinusoid.
 * @param a2 Amplitude of the third sinusoid (with minus).
 * @param a4 Amplitude of the fourth sinusoid.
 */
 void ComplexPeriodicSignalGenerator(
-    double* xx,
-    double* fu, 
+    double *xx, 
+    double *fu, 
     int size, 
-    double step,
-    double period1, 
-    double period2, 
-    double period3, 
-    double period4, 
-    double amplitude2, 
-    double amplitude4
+    double st, 
+    double per1, 
+    double per2, 
+    double per3, 
+    double per4, 
+    double a2, 
+    double a4
 ) 
 {
     for (int i = 0; i < size; i++) {
-        double x = i * step;
+        double x = i * st;
         xx[i] = x;
-        fu[i] = sin(period1 * x) 
-               + sin(period2 * x) 
-               - amplitude2 * sin(period3 * x) 
-               + amplitude4 * sin(period4 * x);
+        fu[i] = sin(per1 * x) 
+               + sin(per2 * x) 
+               - a2 * sin(per3 * x) 
+               + a4 * sin(per4 * x);
     }
 }
+
 
 int* ElementwiseAbsDifference(int a[], int b[], int c[], size_t arrays_size) 
 {
     for (size_t i = 0; i < arrays_size; i++) 
     {
-        if (a[i] > b[i])
-        {
-            c[i] = a[i] - b[i];
-        }
-        else 
-        {
-            c[i] = b[i] - a[i];
-        }
+        c[i] = abs(a[i] - b[i]);
     }
     return c;
 }
@@ -192,9 +189,6 @@ ExtremaResult FindExtrema(Point *points, size_t size) {
         }
     }
 
-    free(result.mins);
-    free(result.maxs);
-
     return result;
 }
 
@@ -203,7 +197,7 @@ void DecomposerValue(float *array, int *table
 {
     int numbox;
 
-    for (int i = 0; i < array_size; i++)
+    for (size_t i = 0; i < array_size; i++)
     {
         numbox = array[i] / 0.01;
         numbox--;
@@ -264,6 +258,9 @@ Polynomial get_lagrange_poly(const double *xi, const double *yi, int n)
             free_poly(&multiplier);
             poly = temp;
         }
+        for (int i = 0; i < n; i++) {
+            free_poly(&basis_polys[i]);
+        }
         basis_polys[pl] = poly;
     }
 
@@ -282,3 +279,35 @@ Polynomial get_lagrange_poly(const double *xi, const double *yi, int n)
 
     return L;
 } 
+
+
+void FourierTransformFFT(double complex *x, int n) {
+    if (n <= 1) return;
+
+    double complex *even = malloc(n/2 * sizeof(double complex));
+    double complex *odd = malloc(n/2 * sizeof(double complex));
+    for (int i = 0; i < n/2; i++) {
+        even[i] = x[2*i];
+        odd[i] = x[2*i + 1];
+    }
+
+    FourierTransformFFT(even, n/2);
+    FourierTransformFFT(odd, n/2);
+    
+    for (int k = 0; k < n/2; k++) {
+        double complex t = cexp(-2 * I * M_PI * k / n) * odd[k];
+        x[k]     = even[k] + t;
+        x[k+n/2] = even[k] - t;
+    }
+
+    free(even);
+    free(odd);
+}
+
+void FourierTransformDFT(double complex *x, double complex *X, int n) {
+    for (int k = 0; k < n; k++) {
+        X[k] = 0;
+        for (int i = 0; i < n; i++)
+            X[k] += x[i] * cexp(-2 * I * M_PI * k * i / n);
+    }
+}
