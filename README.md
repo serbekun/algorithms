@@ -1,5 +1,13 @@
 # Algorithms Collection
 
+## How was created code
+The code was written during training, so it's messy, experimental, and may contain non-working parts.  
+Use at your own risk — or for your own amusement.
+
+## License
+This project is licensed under the Do What The Fuck You Want To Public License (WTFPL) — see the LICENSE file for details.
+
+# overview
 This repository contains a collection of algorithm implementations in C, Fortran, Python, and Gnuplot. Each file demonstrates a specific algorithm or computational method, useful for educational purposes and practical applications.
 
 ## Table of Contents
@@ -115,8 +123,3 @@ Here are some examples of how to use the programs:
 
 Please refer to the comments within each source file for detailed instructions and explanations.
 
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-If you have any suggestions or improvements, feel free to fork the repository and submit a pull request.
