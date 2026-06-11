@@ -99,5 +99,16 @@ int main() {
     }
     printf("\n");
 
+    NumsThatHasIntegerRoot *result_squares = FoundNumThatHasIntegerRoot(128);
+
+    printf("SQUARES:\n");
+    for (size_t i = 0; i < result_squares->count; i++) {
+        printf("%ld: %d\n", i, result_squares->squares[i]);
+    }
+
+    free(result_squares->squares);
+    free(result);
+
+
     return 0;
 }

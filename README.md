@@ -77,6 +77,9 @@ The repository includes implementations of various algorithms, such as statistic
 * **CalculatingTheCross-correlationBetweenTwoSignals.c**
   calculate the cross correlation between two signals.
 
+* **FoundNumThatHasIntegerRoot.c**
+　Finds a number that has an integer as its root.
+
 ### Gnuplot Scripts
 
 * **look.gp**
